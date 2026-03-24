@@ -1,0 +1,25 @@
+#lounge-profile-stats-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 16px 4px;
+}
+
+.ls-tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.ls-posts {
+    background-color: rgba(0, 199, 174, 0.15);
+    color: #00c7ae;
+}
+
+.ls-comments {
+    background-color: rgba(255, 180, 60, 0.15);
+    color: #ffb43c;
+}

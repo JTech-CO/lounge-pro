@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>lounge-pro | 개인정보 처리방침 · Privacy Policy</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap');
+
+    :root {
+      --bg: #000000;
+      --text-primary: #e0e0e0;
+      --text: #cccccc;
+      --muted: #888888;
+      --panel: #0a0a0a;
+      --border: #333333;
+      --border-hover: #ffffff;
+      --link: #ffffff;
+      --link-visited: #cccccc;
+      --accent: #ffffff;
+      --note-bg: #111111;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      padding: 80px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1,
+    h2,
+    h3 {
+      color: var(--accent);
+      margin: 0 0 1rem 0;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      display: flex;
+      align-items: center;
+    }
+
+    h2::after {
+      content: '';
+      flex-grow: 1;
+      height: 1px;
+      background: var(--border);
+      margin-left: 20px;
+    }
+
+    p {
+      margin: 10px 0;
+      color: var(--text);
+      font-weight: 300;
+    }
+
+    a {
+      color: var(--link);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color .2s;
+    }
+
+    a:visited {
+      color: var(--link-visited);
+    }
+
+    a:hover {
+      border-bottom-color: var(--link);
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .note {
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      background: var(--note-bg);
+      border-left: 2px solid var(--accent);
+      padding: 16px;
+      font-family: var(--font-mono);
+      margin: 16px 0;
+    }
+
+    .lang-switch {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin: 24px 0 16px;
+    }
+
+    button.btn {
+      appearance: none;
+      border: 1px solid var(--accent);
+      background: transparent;
+      color: var(--accent);
+      padding: 12px 24px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      transition: all .2s;
+    }
+
+    button.btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .lang {
+      display: none;
+    }
+
+    .lang.active {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 24px;
+      transition: all .3s;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    .card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+
+    ul {
+      margin: 12px 0 12px 22px;
+      color: var(--text);
+      font-weight: 300;
+    }
+
+    li {
+      padding-left: 4px;
+      margin-bottom: 8px;
+    }
+
+    li strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .small {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 20px;
+    }
+
+    footer {
+      margin-top: 80px;
+      padding: 40px 20px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 40px 20px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      main {
+        padding: 40px 20px;
+      }
+
+      h2 {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      h2::after {
+        width: 100%;
+        margin-top: 10px;
+        margin-left: 0;
+      }
+    }
+  </style>
+  <script>
+    function setLang(l) {
+      document.querySelectorAll('.lang').forEach(el => el.classList.remove('active'));
+      var t = document.getElementById('lang-' + l);
+      if (t) t.classList.add('active');
+      try { localStorage.setItem('lb-pp-lang', l); } catch (e) { }
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+      var saved = null;
+      try { saved = localStorage.getItem('lb-pp-lang'); } catch (e) { }
+      setLang(saved || 'ko');
+    });
+  </script>
+</head>
+
+<body>
+  <header>
+    <div class="badge">lounge-pro</div>
+    <h1>개인정보 처리방침 · Privacy Policy</h1>
+    <div class="lang-switch">
+      <button class="btn" onclick="setLang('ko')">한국어</button>
+      <button class="btn" onclick="setLang('en')">English</button>
+    </div>
+    <span class="small">Last updated: 2026-03-25</span>
+  </header>
+
+  <main>
+
+    <!-- Korean -->
+    <section id="lang-ko" class="lang">
+
+      <div class="card">
+        <h2>개요</h2>
+        <p>이 문서는 Chrome 확장 프로그램 <strong>lounge-pro</strong>의 개인정보 처리방침입니다.</p>
+        <p class="note">lounge-pro는 네이버 라운지(lounge.naver.com) 페이지에서 동작하며, 사용자가 직접 지정한 닉네임을 브라우저 로컬 저장소에만 저장합니다. 어떠한 데이터도
+          외부 서버로 전송하지 않습니다.</p>
+      </div>
+
+      <div class="card">
+        <h2>1. 처리하는 데이터</h2>
+        <ul>
+          <li><strong>차단 닉네임 목록</strong>: 사용자가 직접 입력한 닉네임(최대 10개)을 브라우저의 <em>chrome.storage.local</em>에 저장합니다. 이 데이터는
+            사용자의 기기에만 존재하며 외부로 전송되지 않습니다.</li>
+          <li><strong>페이지 DOM 읽기</strong>: 차단 기능 수행을 위해 현재 열린 네이버 라운지 페이지의 게시글 닉네임 요소를 일시적으로 읽습니다. 또한 프로필 통계 표시를 위해 프로필
+            페이지의 게시글 수 · 댓글 수 정보를 읽습니다. 읽은 내용은 저장되지 않습니다.</li>
+          <li><strong>네트워크 요청 감청</strong>: 게시글과 작성자의 매핑 정보를 얻기 위해 브라우저 내부에서 네이버 라운지 API 응답을 가로챕니다. 이 과정에서 수집된 데이터는 메모리에만
+            임시 보관되며, 페이지를 벗어나면 즉시 소멸합니다.</li>
+          <li><strong>프로필 통계 파싱</strong>: 프로필 페이지 방문 시 페이지 내 스크립트 데이터(RSC)에서 총 게시글 수와 댓글 수를 읽어 배지로 표시합니다. 이 데이터는 화면 표시
+            용도로만 사용되며 저장되지 않습니다.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>2. 데이터 공유 및 제3자 제공</h2>
+        <p>lounge-pro는 수집하거나 처리한 데이터를 <strong>어떠한 제3자에게도 제공하지 않습니다.</strong> 분석 도구, 광고 SDK, 원격 서버, 클라우드 전송 기능이 일절 포함되어
+          있지 않습니다.</p>
+      </div>
+
+      <div class="card">
+        <h2>3. 데이터 보관 및 삭제</h2>
+        <ul>
+          <li><strong>차단 목록</strong>: 사용자가 직접 '해제' 버튼을 누르거나, 브라우저의 확장 프로그램 데이터를 초기화하면 삭제됩니다.</li>
+          <li><strong>임시 데이터</strong>: 페이지 이동 또는 탭 종료 시 메모리에서 즉시 소멸합니다.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>추가 안내</h2>
+        <ul>
+          <li><strong>보안</strong>: 모든 데이터 처리는 사용자의 브라우저 환경 내에서만 이루어집니다.</li>
+          <li><strong>아동</strong>: 특정 연령대를 대상으로 하지 않는 일반 유틸리티 도구입니다.</li>
+          <li><strong>정책 변경</strong>: 기능 변경으로 처리방침이 갱신될 경우 본 페이지의 날짜와 함께 새 내용을 게시합니다.</li>
+          <li><strong>연락처</strong>: 문의 사항은 <a href="mailto:jtech-bryan@proton.me">jtech-bryan@proton.me</a>로 연락해 주세요.
+          </li>
+        </ul>
+      </div>
+
+    </section>
+
+    <!-- English -->
+    <section id="lang-en" class="lang">
+
+      <div class="card">
+        <h2>Overview</h2>
+        <p>This Privacy Policy describes how the Chrome extension <strong>lounge-pro</strong> handles user data.</p>
+        <p class="note">lounge-pro operates exclusively on Naver Lounge (lounge.naver.com) and stores only the nicknames
+          you specify — locally in your browser. No data is ever sent to any external server.</p>
+      </div>
+
+      <div class="card">
+        <h2>1. Data We Process</h2>
+        <ul>
+          <li><strong>Block list (nicknames)</strong>: Up to 10 nicknames you enter are saved in
+            <em>chrome.storage.local</em> on your device only. This data never leaves your browser.</li>
+          <li><strong>Page DOM reading</strong>: To apply blocks, the extension temporarily reads post-author nickname
+            elements on the active Naver Lounge page. It also reads post and comment count information on profile pages
+            to display stats badges. This data is not stored.</li>
+          <li><strong>Network response interception</strong>: To map posts to their authors, the extension intercepts
+            Naver Lounge API responses inside the browser. Any data gathered this way is held only in memory and is
+            discarded immediately upon page navigation or tab close.</li>
+          <li><strong>Profile stats parsing</strong>: When visiting a profile page, the extension reads total post and
+            comment counts from in-page script data (RSC) to display as badges. This data is used solely for on-screen
+            display and is not stored.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>2. Data Sharing &amp; Third Parties</h2>
+        <p>lounge-pro <strong>does not share any data with third parties.</strong> The extension contains no analytics,
+          ad SDKs, remote servers, or cloud transfer functionality of any kind.</p>
+      </div>
+
+      <div class="card">
+        <h2>3. Data Retention &amp; Deletion</h2>
+        <ul>
+          <li><strong>Block list</strong>: Deleted when you press the "해제 (unblock)" button or clear the extension's
+            storage via your browser settings.</li>
+          <li><strong>Temporary data</strong>: Cleared from memory instantly upon page navigation or tab close.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Additional Information</h2>
+        <ul>
+          <li><strong>Security</strong>: All data processing is strictly confined to your local browser environment.
+          </li>
+          <li><strong>Children</strong>: This is a general utility tool and is not directed at any specific age group.
+          </li>
+          <li><strong>Policy changes</strong>: If feature updates require changes to this policy, the updated content
+            and date will be posted on this page.</li>
+          <li><strong>Contact</strong>: For any inquiries, reach us at <a
+              href="mailto:jtech-bryan@proton.me">jtech-bryan@proton.me</a>.</li>
+        </ul>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    © 2026 lounge-pro
+  </footer>
+</body>
+
+</html>
