@@ -54,7 +54,7 @@ lounge-pro/
 ├── content.js                 # 핵심 로직 (차단 필터링 + UI + 프로필 통계)
 ├── style.css                  # 프로필 통계 배지 스타일
 ├── icons/                     # 확장 프로그램 아이콘 (16/48/128px)
-├── lounge-block-privacy-policy.html  # 개인정보 처리방침
+├── lounge-pro-privacy-policy.html  # 개인정보 처리방침
 ├── RELEASE-NOTES.md           # 릴리즈 노트
 └── README.md                  # 프로젝트 안내 문서
 ```
