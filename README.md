@@ -6,6 +6,8 @@
 
 lounge-pro는 네이버 라운지(lounge.naver.com)에 부족한 편의 기능을 브라우저 확장 프로그램으로 보완합니다.
 
+#### [업데이트 내역(릴리즈 노트)](<https://github.com/JTech-CO/lounge-pro/blob/main/RELEASE-NOTES.md>)
+
 **사용자 차단 (User Blocker)**
 - 닉네임을 입력하면 해당 사용자의 게시글이 피드에서 즉시 사라짐
 - 최대 20명 차단 가능, 언제든 개별 해제 가능
