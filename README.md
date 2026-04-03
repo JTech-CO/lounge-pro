@@ -1,6 +1,6 @@
 # lounge-pro
 
-> **네이버 라운지를 더 쾌적하게 - 사용자 차단 + 프로필 통계**
+> **네이버 라운지를 더 쾌적하게 - 사용자 차단 + 커스텀 테마**
 
 ## 1. 소개 (Introduction)
 
@@ -62,6 +62,6 @@ lounge-pro/
 
 ## 5. 정보 (Info)
 
-- **Version**: 2.0
+- **Version**: 2.6
 - **License**: MIT
 - **Privacy Policy**: [개인정보 처리방침](https://jtech-co.github.io/lounge-pro/lounge-block-privacy-policy.html)
