@@ -1,25 +1,329 @@
-#lounge-profile-stats-badge {
+/* ══════════════════════════════════════
+   lounge-pro  —  Monthly Event Progress Panel
+   Naver Lounge Dark Brand Theme
+   ══════════════════════════════════════ */
+#lp-monthly-panel,
+#lp-monthly-panel *,
+#lp-monthly-panel *::before,
+#lp-monthly-panel *::after {
+    color: #f2f2f2 !important;
+    -webkit-text-fill-color: #f2f2f2 !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    filter: none !important;
+    animation-name: none !important;
+    animation-duration: 0s !important;
+    text-shadow: none !important;
+    font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', sans-serif !important;
+}
+
+/* ── Panel Container ── */
+#lp-monthly-panel {
+    background-color: #111111 !important;
+    border: 1px solid #2a2a2a !important;
+    border-radius: 16px !important;
+    margin: 8px 16px;
+    padding: 12px 16px 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ── Header ── */
+#lp-monthly-panel .lpm-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+#lp-monthly-panel .lpm-title-row {
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 12px 16px 4px;
 }
 
-.ls-tag {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 1.5;
+#lp-monthly-panel .lpm-icon {
+    color: #03C75A !important;
+    -webkit-text-fill-color: #03C75A !important;
+    flex-shrink: 0;
 }
 
-.ls-posts {
-    background-color: rgba(0, 199, 174, 0.15);
-    color: #00c7ae;
+#lp-monthly-panel .lpm-icon path {
+    fill: none !important;
+    stroke: #03C75A !important;
 }
 
-.ls-comments {
-    background-color: rgba(255, 180, 60, 0.15);
-    color: #ffb43c;
+#lp-monthly-panel .lpm-title {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #f2f2f2 !important;
+    -webkit-text-fill-color: #f2f2f2 !important;
+    letter-spacing: -0.3px;
+}
+
+#lp-monthly-panel .lpm-refresh {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px !important;
+    cursor: pointer;
+    transition: background-color 0.15s, transform 0.2s;
+    color: #a3a3a3 !important;
+    -webkit-text-fill-color: #a3a3a3 !important;
+    padding: 0;
+    background: none !important;
+}
+
+#lp-monthly-panel .lpm-refresh:hover {
+    background-color: #1e1e1e !important;
+}
+
+#lp-monthly-panel .lpm-refresh:active {
+    transform: rotate(-180deg);
+}
+
+#lp-monthly-panel .lpm-refresh svg path,
+#lp-monthly-panel .lpm-refresh svg polyline {
+    fill: none !important;
+    stroke: #a3a3a3 !important;
+}
+
+/* ── Loading / Error ── */
+#lp-monthly-panel .lpm-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 0;
+    font-size: 11px !important;
+    color: #a3a3a3 !important;
+    -webkit-text-fill-color: #a3a3a3 !important;
+}
+
+#lp-monthly-panel .lpm-err {
+    color: #ff6b6b !important;
+    -webkit-text-fill-color: #ff6b6b !important;
+}
+
+#lp-monthly-panel .lpm-spinner {
+    width: 12px;
+    height: 12px;
+    border: 2px solid #333 !important;
+    border-top-color: #03C75A !important;
+    border-radius: 50% !important;
+    animation-name: lpm-spin !important;
+    animation-duration: 0.6s !important;
+    animation-timing-function: linear !important;
+    animation-iteration-count: infinite !important;
+}
+
+@keyframes lpm-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ── Track ── */
+#lp-monthly-panel .lpm-track {
+    margin-bottom: 8px;
+}
+
+#lp-monthly-panel .lpm-track:last-child {
+    margin-bottom: 0;
+}
+
+#lp-monthly-panel .lpm-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+}
+
+#lp-monthly-panel .lpm-label {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+}
+
+#lp-monthly-panel .lpm-posts .lpm-label {
+    color: #03C75A !important;
+    -webkit-text-fill-color: #03C75A !important;
+}
+
+#lp-monthly-panel .lpm-comments .lpm-label {
+    color: #ffb43c !important;
+    -webkit-text-fill-color: #ffb43c !important;
+}
+
+#lp-monthly-panel .lpm-count {
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    color: #a3a3a3 !important;
+    -webkit-text-fill-color: #a3a3a3 !important;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ── Bar ── */
+#lp-monthly-panel .lpm-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#lp-monthly-panel .lpm-bar-container {
+    flex: 1;
+    position: relative;
+}
+
+#lp-monthly-panel .lpm-bar-bg {
+    height: 8px;
+    background-color: #2a2a2a !important;
+    border-radius: 4px !important;
+    position: relative;
+    overflow: hidden;
+}
+
+#lp-monthly-panel .lpm-bar-fill {
+    height: 100%;
+    border-radius: 4px !important;
+    transition: width 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+}
+
+/* Stage colors */
+#lp-monthly-panel .lpm-bar-fill.lpm-start {
+    background: linear-gradient(90deg, #5a2a2a, #cc4444) !important;
+}
+
+#lp-monthly-panel .lpm-bar-fill.lpm-low {
+    background: linear-gradient(90deg, #5a4020, #e8940c) !important;
+}
+
+#lp-monthly-panel .lpm-bar-fill.lpm-mid {
+    background: linear-gradient(90deg, #1a3a5c, #3d8bfd) !important;
+}
+
+#lp-monthly-panel .lpm-bar-fill.lpm-high {
+    background: linear-gradient(90deg, #0a5a3a, #03C75A) !important;
+}
+
+#lp-monthly-panel .lpm-bar-fill.lpm-complete {
+    background: linear-gradient(90deg, #029d47, #03C75A) !important;
+    box-shadow: 0 0 10px rgba(3, 199, 90, 0.3) !important;
+}
+
+#lp-monthly-panel .lpm-bar-fill.lpm-exceeded {
+    background: linear-gradient(90deg, #029d47, #03C75A, #5aff8a, #03C75A, #029d47) !important;
+    background-size: 200% 100% !important;
+    animation-name: lpm-shimmer !important;
+    animation-duration: 1.8s !important;
+    animation-timing-function: ease-in-out !important;
+    animation-iteration-count: infinite !important;
+    box-shadow: 0 0 12px rgba(3, 199, 90, 0.35) !important;
+}
+
+@keyframes lpm-shimmer {
+
+    0%,
+    100% {
+        background-position: 0% center;
+    }
+
+    50% {
+        background-position: 100% center;
+    }
+}
+
+/* ── Percentage ── */
+#lp-monthly-panel .lpm-pct {
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    min-width: 32px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+#lp-monthly-panel .lpm-pct.lpm-start {
+    color: #cc4444 !important;
+    -webkit-text-fill-color: #cc4444 !important;
+}
+
+#lp-monthly-panel .lpm-pct.lpm-low {
+    color: #e8940c !important;
+    -webkit-text-fill-color: #e8940c !important;
+}
+
+#lp-monthly-panel .lpm-pct.lpm-mid {
+    color: #3d8bfd !important;
+    -webkit-text-fill-color: #3d8bfd !important;
+}
+
+#lp-monthly-panel .lpm-pct.lpm-high {
+    color: #03C75A !important;
+    -webkit-text-fill-color: #03C75A !important;
+}
+
+#lp-monthly-panel .lpm-pct.lpm-complete {
+    color: #03C75A !important;
+    -webkit-text-fill-color: #03C75A !important;
+}
+
+/* ── Milestones ── */
+#lp-monthly-panel .lpm-milestones {
+    position: relative;
+    height: 12px;
+    margin-top: 1px;
+}
+
+#lp-monthly-panel .lpm-ms {
+    position: absolute;
+    transform: translateX(-50%);
+    font-size: 7px !important;
+    font-weight: 600 !important;
+    color: #444 !important;
+    -webkit-text-fill-color: #444 !important;
+    line-height: 1;
+    top: 0;
+    user-select: none;
+}
+
+#lp-monthly-panel .lpm-ms::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 3px;
+    background-color: #333 !important;
+    margin-bottom: 1px;
+}
+
+#lp-monthly-panel .lpm-ms.on {
+    color: #a3a3a3 !important;
+    -webkit-text-fill-color: #a3a3a3 !important;
+}
+
+#lp-monthly-panel .lpm-ms.on::before {
+    background-color: #555 !important;
+}
+
+/* Goal marker (100%) */
+#lp-monthly-panel .lpm-ms-goal {
+    font-size: 9px !important;
+    color: #333 !important;
+    -webkit-text-fill-color: #333 !important;
+}
+
+#lp-monthly-panel .lpm-ms-goal::before {
+    display: none;
+}
+
+#lp-monthly-panel .lpm-ms-goal.on {
+    color: #03C75A !important;
+    -webkit-text-fill-color: #03C75A !important;
+    filter: drop-shadow(0 0 4px rgba(3, 199, 90, 0.5)) !important;
 }

@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "lounge-pro",
-  "version": "2.6",
-  "description": "Naver Lounge Enhancement Suite - User Blocker & Profile Stats",
+  "version": "3.0.1",
+  "description": "Naver Lounge Enhancement Suite - User Blocker, Profile Stats & Monthly Event Tracker",
   "permissions": [
     "storage"
   ],

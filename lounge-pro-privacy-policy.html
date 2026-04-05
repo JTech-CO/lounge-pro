@@ -259,7 +259,7 @@
       <button class="btn" onclick="setLang('ko')">한국어</button>
       <button class="btn" onclick="setLang('en')">English</button>
     </div>
-    <span class="small">Last updated: 2026-04-03</span>
+    <span class="small">Last updated: 2026-04-06</span>
   </header>
 
   <main>
@@ -279,14 +279,15 @@
         <ul>
           <li><strong>차단 닉네임 목록</strong>: 사용자가 직접 입력한 닉네임(최대 20개)을 브라우저의 <em>chrome.storage.local</em>에 저장합니다. 이 데이터는
             사용자의 기기에만 존재하며 외부로 전송되지 않습니다.</li>
-          <li><strong>테마 설정</strong>: 사용자가 선택한 테마(Pastel, Cyberpunk, Holographic, Neon, High Contrast, Matrix, Claude Code)와 적용 범위(글자·테두리·그라데이션) 값을
+          <li><strong>테마 설정</strong>: 사용자가 선택한 테마(Pastel, Cyberpunk, Holographic, Neon, High Contrast, Matrix, Claude
+            Code)와 적용 범위(글자·테두리·그라데이션) 값을
             브라우저의 <em>chrome.storage.local</em>에 저장합니다. 이 데이터는 사용자의 기기에만 존재하며 외부로 전송되지 않습니다.</li>
           <li><strong>페이지 DOM 읽기</strong>: 차단 기능 수행을 위해 현재 열린 네이버 라운지 페이지의 게시글 닉네임 요소를 일시적으로 읽습니다. 또한 프로필 통계 표시를 위해 프로필
             페이지의 게시글 수 · 댓글 수 정보를 읽습니다. 읽은 내용은 저장되지 않습니다.</li>
-          <li><strong>네트워크 요청 감청</strong>: 게시글과 작성자의 매핑 정보를 얻기 위해 브라우저 내부에서 네이버 라운지 API 응답을 가로챕니다. 이 과정에서 수집된 데이터는 메모리에만
-            임시 보관되며, 페이지를 벗어나면 즉시 소멸합니다.</li>
-          <li><strong>프로필 통계 파싱</strong>: 프로필 페이지 방문 시 페이지 내 스크립트 데이터(RSC)에서 총 게시글 수와 댓글 수를 읽어 배지로 표시합니다. 이 데이터는 화면 표시
-            용도로만 사용되며 저장되지 않습니다.</li>
+          <li><strong>네트워크 요청 감청 및 분석</strong>: 게시글과 작성자의 매핑 정보를 얻고 <strong>월간 활동량(게시글/댓글 수)</strong>을 집계하기 위해 브라우저 내부에서
+            네이버 라운지 API 응답을 가로채어 분석합니다. 이 과정에서 수집·계산된 통계는 효율성을 위해 메모리에 임시 캐시(약 5분)되며, 어떤 데이터도 외부로 전송되지 않고 소멸합니다.</li>
+          <li><strong>프로필 통계 렌더링</strong>: 프로필 페이지 방문 시 페이지 내 스크립트 데이터(RSC) 및 API 응답을 활용하여 총 활동 통계와 월간 이벤트 달성률을 패널로
+            표시합니다. 이 데이터는 화면 표시 용도로만 사용되며 저장되지 않습니다.</li>
         </ul>
       </div>
 
@@ -331,18 +332,22 @@
         <h2>1. Data We Process</h2>
         <ul>
           <li><strong>Block list (nicknames)</strong>: Up to 20 nicknames you enter are saved in
-            <em>chrome.storage.local</em> on your device only. This data never leaves your browser.</li>
-          <li><strong>Theme settings</strong>: Your selected theme (Pastel, Cyberpunk, Holographic, Neon, High Contrast, Matrix, or Claude Code) and scope preferences (text / border / background gradient) are saved in
-            <em>chrome.storage.local</em> on your device only. This data never leaves your browser.</li>
+            <em>chrome.storage.local</em> on your device only. This data never leaves your browser.
+          </li>
+          <li><strong>Theme settings</strong>: Your selected theme (Pastel, Cyberpunk, Holographic, Neon, High Contrast,
+            Matrix, or Claude Code) and scope preferences (text / border / background gradient) are saved in
+            <em>chrome.storage.local</em> on your device only. This data never leaves your browser.
+          </li>
           <li><strong>Page DOM reading</strong>: To apply blocks, the extension temporarily reads post-author nickname
             elements on the active Naver Lounge page. It also reads post and comment count information on profile pages
             to display stats badges. This data is not stored.</li>
-          <li><strong>Network response interception</strong>: To map posts to their authors, the extension intercepts
-            Naver Lounge API responses inside the browser. Any data gathered this way is held only in memory and is
-            discarded immediately upon page navigation or tab close.</li>
-          <li><strong>Profile stats parsing</strong>: When visiting a profile page, the extension reads total post and
-            comment counts from in-page script data (RSC) to display as badges. This data is used solely for on-screen
-            display and is not stored.</li>
+          <li><strong>Network response interception &amp; analysis</strong>: To map posts to their authors and calculate
+            your <strong>monthly activity (posts/comments)</strong>, the extension intercepts and analyzes Naver Lounge
+            API responses inside the browser. The calculated stats are temporarily cached in memory (for about 5 mins)
+            for performance but never leave your browser and are discarded thereafter.</li>
+          <li><strong>Profile stats rendering</strong>: When visiting a profile page, the extension uses in-page script
+            data (RSC) and API responses to display your total stats and monthly achievement tracker. This data is used
+            solely for on-screen display and is not stored.</li>
         </ul>
       </div>
 

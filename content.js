@@ -5,13 +5,13 @@
   const SCOPE_KEY = 'naver_lounge_theme_scopes';
   const MAX = 20;
   let blockList = [];
-  let currentTheme = '1';
+  let currentTheme = '0';
   let currentScopes = ['text'];
   let openPanelType = null;
 
   chrome.storage.local.get([KEY, THEME_KEY, SCOPE_KEY], d => {
     blockList = d[KEY] || [];
-    currentTheme = d[THEME_KEY] || '1';
+    currentTheme = d[THEME_KEY] || '0';
     currentScopes = d[SCOPE_KEY] || ['text'];
     mountUI();
     start();
@@ -19,6 +19,7 @@
 
   window.addEventListener('message', e => {
     if (e.data?.type === 'QUIET_LOUNGE_API_DATA') filterAll();
+    if (e.data?.type === 'LP_MONTHLY_STATS_RESULT') handleMonthlyStats(e.data);
   });
 
   chrome.storage.onChanged.addListener(changes => {
@@ -28,9 +29,17 @@
   function start() {
     filterAll();
     applyTheme();
-    const mo = new MutationObserver(debounce(filterAll, 300));
+    checkProfilePage();
+    const onMutation = debounce(() => { filterAll(); ensureProfilePanel(); }, 300);
+    const mo = new MutationObserver(onMutation);
     mo.observe(document.body, { childList: true, subtree: true });
     watchNavigation();
+  }
+
+  function ensureProfilePanel() {
+    if (!getPersonaIdFromPath()) return;
+    // If panel was removed by React re-render, re-mount it
+    if (!document.getElementById(MONTHLY_ID)) checkProfilePage();
   }
 
   function debounce(fn, ms) {
@@ -101,11 +110,11 @@
   function watchNavigation() {
     const wrap = fn => function (...a) {
       fn.apply(this, a);
-      setTimeout(() => { filterAll(); applyTheme(); }, 400);
+      setTimeout(() => { filterAll(); applyTheme(); checkProfilePage(); }, 400);
     };
     history.pushState = wrap(history.pushState);
     history.replaceState = wrap(history.replaceState);
-    window.addEventListener('popstate', () => setTimeout(() => { filterAll(); applyTheme(); }, 400));
+    window.addEventListener('popstate', () => setTimeout(() => { filterAll(); applyTheme(); checkProfilePage(); }, 400));
   }
 
   function mountUI() {
@@ -347,7 +356,7 @@
       style.id = 'lp-theme-style';
       document.head.appendChild(style);
     }
-    
+
     const isGlobalToggle = ['5', '6', '7'].includes(currentTheme);
     const isWritePage = window.location.href.includes('/posts/write');
 
@@ -486,13 +495,13 @@
 
     } else if (isClaudeTheme) {
       /* ── Claude Code Terminal Theme ── */
-      const CC_BG    = '#1e1e1e';  // charcoal background
+      const CC_BG = '#1e1e1e';  // charcoal background
       const CC_PANEL = '#2a2a2a';  // slightly lighter panels
-      const CC_ACCENT= '#e8855a';  // claude's salmon-orange
-      const CC_TEXT  = '#d4cfbe';  // warm off-white main text
-      const CC_DIM   = '#8b8378';  // muted secondary text
+      const CC_ACCENT = '#e8855a';  // claude's salmon-orange
+      const CC_TEXT = '#d4cfbe';  // warm off-white main text
+      const CC_DIM = '#8b8378';  // muted secondary text
       const CC_GREEN = '#7cb87c';  // terminal green for labels
-      const CC_DASH  = '#5a5040';  // dashed border color
+      const CC_DASH = '#5a5040';  // dashed border color
 
       css.push(`
         /* ── Claude Code: Root Tokens ── */
@@ -595,7 +604,7 @@
 
     } else {
       const t = THEMES[currentTheme];
-      
+
       if (currentScopes.includes('text')) {
         if (currentTheme === '4') {
           css.push(`
@@ -704,7 +713,237 @@
       }
     }
 
+    /* ── Monthly Stats Panel Theme Integration ── */
+    if (isLayoutTheme) {
+      css.push(`
+        #lp-monthly-panel, #lp-monthly-panel *, #lp-monthly-panel *::before, #lp-monthly-panel *::after {
+          color: ${accentColor} !important;
+          -webkit-text-fill-color: ${accentColor} !important;
+          background-color: transparent !important;
+          background-image: none !important;
+          font-family: inherit !important;
+        }
+        #lp-monthly-panel {
+          background-color: ${bgColor} !important;
+          border: 1px solid ${accentColor} !important;
+          border-radius: 0 !important;
+          box-shadow: none !important;
+        }
+        #lp-monthly-panel .lpm-bar-bg { background-color: ${accentColor}22 !important; border-radius: 0 !important; }
+        #lp-monthly-panel .lpm-bar-fill { border-radius: 0 !important; background: ${accentColor} !important; }
+        #lp-monthly-panel .lpm-bar-fill.lpm-exceeded { background: ${accentColor} !important; animation-name: none !important; }
+        #lp-monthly-panel .lpm-ms, #lp-monthly-panel .lpm-ms.on { color: ${accentColor}88 !important; -webkit-text-fill-color: ${accentColor}88 !important; }
+        #lp-monthly-panel .lpm-ms::before { background-color: ${accentColor}55 !important; }
+        #lp-monthly-panel .lpm-ms-goal.on { color: ${accentColor} !important; -webkit-text-fill-color: ${accentColor} !important; filter: none !important; }
+        #lp-monthly-panel .lpm-posts .lpm-label { color: ${accentColor} !important; -webkit-text-fill-color: ${accentColor} !important; }
+        #lp-monthly-panel .lpm-comments .lpm-label { color: ${accentColor}cc !important; -webkit-text-fill-color: ${accentColor}cc !important; }
+        #lp-monthly-panel .lpm-pct, #lp-monthly-panel .lpm-count { color: ${accentColor} !important; -webkit-text-fill-color: ${accentColor} !important; }
+        #lp-monthly-panel .lpm-refresh svg path, #lp-monthly-panel .lpm-refresh svg polyline { stroke: ${accentColor}88 !important; }
+        #lp-monthly-panel .lpm-icon path { stroke: ${accentColor} !important; }
+        #lp-monthly-panel .lpm-spinner { border-color: ${accentColor}33 !important; border-top-color: ${accentColor} !important; border-radius: 0 !important; }
+      `);
+    } else if (isClaudeTheme) {
+      const CC_BG = '#1e1e1e', CC_PANEL = '#2a2a2a', CC_ACCENT = '#e8855a', CC_TEXT = '#d4cfbe', CC_DIM = '#8b8378', CC_DASH = '#5a5040';
+      css.push(`
+        #lp-monthly-panel, #lp-monthly-panel *, #lp-monthly-panel *::before, #lp-monthly-panel *::after {
+          color: ${CC_TEXT} !important;
+          -webkit-text-fill-color: ${CC_TEXT} !important;
+          background-color: transparent !important;
+          background-image: none !important;
+          font-family: 'Courier New', 'Consolas', 'Monaco', monospace !important;
+        }
+        #lp-monthly-panel {
+          background-color: ${CC_BG} !important;
+          border: 1px dashed ${CC_DASH} !important;
+          border-radius: 0 !important;
+          box-shadow: none !important;
+        }
+        #lp-monthly-panel .lpm-title { color: ${CC_ACCENT} !important; -webkit-text-fill-color: ${CC_ACCENT} !important; }
+        #lp-monthly-panel .lpm-bar-bg { background-color: ${CC_PANEL} !important; border-radius: 0 !important; }
+        #lp-monthly-panel .lpm-bar-fill { border-radius: 0 !important; background: ${CC_ACCENT} !important; }
+        #lp-monthly-panel .lpm-bar-fill.lpm-exceeded { background: ${CC_ACCENT} !important; animation-name: none !important; }
+        #lp-monthly-panel .lpm-ms, #lp-monthly-panel .lpm-ms.on { color: ${CC_DIM} !important; -webkit-text-fill-color: ${CC_DIM} !important; }
+        #lp-monthly-panel .lpm-ms::before { background-color: ${CC_DASH} !important; }
+        #lp-monthly-panel .lpm-ms-goal.on { color: ${CC_ACCENT} !important; -webkit-text-fill-color: ${CC_ACCENT} !important; filter: none !important; }
+        #lp-monthly-panel .lpm-posts .lpm-label { color: ${CC_ACCENT} !important; -webkit-text-fill-color: ${CC_ACCENT} !important; }
+        #lp-monthly-panel .lpm-comments .lpm-label { color: ${CC_DIM} !important; -webkit-text-fill-color: ${CC_DIM} !important; }
+        #lp-monthly-panel .lpm-pct, #lp-monthly-panel .lpm-count { color: ${CC_TEXT} !important; -webkit-text-fill-color: ${CC_TEXT} !important; }
+        #lp-monthly-panel .lpm-refresh svg path, #lp-monthly-panel .lpm-refresh svg polyline { stroke: ${CC_DIM} !important; }
+        #lp-monthly-panel .lpm-icon path { stroke: ${CC_ACCENT} !important; }
+        #lp-monthly-panel .lpm-spinner { border-color: ${CC_DASH} !important; border-top-color: ${CC_ACCENT} !important; border-radius: 0 !important; }
+      `);
+    } else if (currentScopes.includes('border')) {
+      const t = THEMES[currentTheme];
+      if (t) {
+        if (currentTheme === '4') {
+          css.push(`
+            #lp-monthly-panel {
+              border-color: transparent !important;
+              border-image: linear-gradient(90deg, #fbc2eb 0%, #a6c1ee 50%, #fbc2eb 100%) 1 !important;
+              border-style: solid !important; border-width: 1px !important;
+              animation: t_breath 3s ease-in-out infinite alternate !important;
+            }
+          `);
+        } else {
+          css.push(`
+            #lp-monthly-panel {
+              border-color: transparent !important;
+              border-image: ${t.bg} 1 !important;
+              border-style: solid !important; border-width: 1px !important;
+              box-shadow: ${t.fbg} !important;
+            }
+          `);
+        }
+      }
+    }
+
     style.textContent = css.join('\\n');
+  }
+
+  /* ── Monthly Profile Stats Panel ── */
+
+  const MONTHLY_ID = 'lp-monthly-panel';
+  const POST_GOAL = 30;
+  const COMMENT_GOAL = 90;
+  let monthlyCache = {};
+  let activePersonaId = null;
+
+  function getPersonaIdFromPath() {
+    const m = location.pathname.match(/^\/profiles\/([^/]+)/);
+    return m ? m[1] : null;
+  }
+
+  function checkProfilePage() {
+    const pid = getPersonaIdFromPath();
+    if (!pid) { removeMonthlyPanel(); activePersonaId = null; return; }
+    activePersonaId = pid;
+
+    // Wait for tablist to appear then mount panel
+    const tryMount = () => {
+      if (document.getElementById(MONTHLY_ID)) {
+        // Already mounted, just ensure data
+        requestIfNeeded(pid);
+        return;
+      }
+      const tablist = document.querySelector('[role="tablist"]');
+      if (tablist) {
+        mountMonthlyPanel(tablist);
+        requestIfNeeded(pid);
+      } else {
+        setTimeout(tryMount, 500);
+      }
+    };
+    tryMount();
+  }
+
+  function requestIfNeeded(pid) {
+    const c = monthlyCache[pid];
+    const now = new Date();
+    if (c && c.month === now.getMonth() + 1 && c.year === now.getFullYear() && (Date.now() - c.ts < 300000)) {
+      renderMonthlyData(c);
+      return;
+    }
+    setMonthlyLoading();
+    window.postMessage({ type: 'LP_MONTHLY_STATS_REQUEST', personaId: pid }, '*');
+  }
+
+  function handleMonthlyStats(data) {
+    if (data.error) { setMonthlyError(); return; }
+    const result = { posts: data.posts, comments: data.comments, month: data.month, year: data.year, ts: Date.now() };
+    monthlyCache[data.personaId] = result;
+    if (data.personaId === activePersonaId) renderMonthlyData(result);
+  }
+
+  function mountMonthlyPanel(tablist) {
+    const panel = document.createElement('div');
+    panel.id = MONTHLY_ID;
+    panel.innerHTML = `
+      <div class="lpm-header">
+        <div class="lpm-title-row">
+          <svg class="lpm-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
+          <span class="lpm-title"></span>
+        </div>
+        <button class="lpm-refresh" title="새로고침">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        </button>
+      </div>
+      <div class="lpm-body">
+        <div class="lpm-loading">불러오는 중...</div>
+      </div>
+    `;
+    tablist.insertAdjacentElement('afterend', panel);
+
+    // Set title with current month
+    const now = new Date();
+    panel.querySelector('.lpm-title').textContent = `${now.getMonth() + 1}월 이벤트 달성 현황`;
+
+    panel.querySelector('.lpm-refresh').addEventListener('click', () => {
+      if (activePersonaId) {
+        delete monthlyCache[activePersonaId];
+        setMonthlyLoading();
+        window.postMessage({ type: 'LP_MONTHLY_STATS_REQUEST', personaId: activePersonaId }, '*');
+      }
+    });
+  }
+
+  function setMonthlyLoading() {
+    const body = document.querySelector(`#${MONTHLY_ID} .lpm-body`);
+    if (body) body.innerHTML = '<div class="lpm-loading"><div class="lpm-spinner"></div>불러오는 중...</div>';
+  }
+
+  function setMonthlyError() {
+    const body = document.querySelector(`#${MONTHLY_ID} .lpm-body`);
+    if (body) body.innerHTML = '<div class="lpm-loading lpm-err">데이터를 불러올 수 없습니다.</div>';
+  }
+
+  function removeMonthlyPanel() {
+    document.getElementById(MONTHLY_ID)?.remove();
+  }
+
+  function getMilestoneClass(pct) {
+    if (pct >= 100) return 'lpm-complete';
+    if (pct >= 75) return 'lpm-high';
+    if (pct >= 50) return 'lpm-mid';
+    if (pct >= 25) return 'lpm-low';
+    return 'lpm-start';
+  }
+
+  function renderTrack(label, count, goal, accentClass) {
+    const pct = Math.round((count / goal) * 100);
+    const fillW = Math.min(pct, 100);
+    const cls = getMilestoneClass(pct);
+    const exceeded = pct > 100;
+
+    const ms = [25, 50, 75].map(v =>
+      `<span class="lpm-ms${pct >= v ? ' on' : ''}" style="left:${v}%">${v}%</span>`
+    ).join('');
+    const goalMs = `<span class="lpm-ms lpm-ms-goal${pct >= 100 ? ' on' : ''}" style="left:calc(100% - 1px)">✦</span>`;
+
+    return `
+      <div class="lpm-track ${accentClass}">
+        <div class="lpm-label-row">
+          <span class="lpm-label">${label}</span>
+          <span class="lpm-count">${count.toLocaleString()} / ${goal}</span>
+        </div>
+        <div class="lpm-bar-wrap">
+          <div class="lpm-bar-container">
+            <div class="lpm-bar-bg">
+              <div class="lpm-bar-fill ${cls}${exceeded ? ' lpm-exceeded' : ''}" style="width:${fillW}%"></div>
+            </div>
+            <div class="lpm-milestones">${ms}${goalMs}</div>
+          </div>
+          <span class="lpm-pct ${cls}">${pct}%</span>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderMonthlyData(data) {
+    const body = document.querySelector(`#${MONTHLY_ID} .lpm-body`);
+    if (!body) return;
+    body.innerHTML =
+      renderTrack('게시글', data.posts, POST_GOAL, 'lpm-posts') +
+      renderTrack('댓글', data.comments, COMMENT_GOAL, 'lpm-comments');
   }
 
 })();
