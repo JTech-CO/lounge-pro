@@ -70,6 +70,6 @@ lounge-pro/
 
 ## 5. 정보 (Info)
 
-- **Version**: 3.0
+- **Version**: 3.0.1
 - **License**: MIT
 - **Privacy Policy**: [개인정보 처리방침](https://jtech-co.github.io/lounge-pro/lounge-pro-privacy-policy.html)
