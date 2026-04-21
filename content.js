@@ -108,13 +108,26 @@
   }
 
   function watchNavigation() {
+    const onNav = () => setTimeout(() => { filterAll(); applyTheme(); checkProfilePage(); }, 400);
+
     const wrap = fn => function (...a) {
       fn.apply(this, a);
-      setTimeout(() => { filterAll(); applyTheme(); checkProfilePage(); }, 400);
+      // Force reload on write page entry while global theme is active
+      if (window.location.href.includes('/posts/write') && ['5', '6', '7'].includes(currentTheme)) {
+        location.reload();
+        return;
+      }
+      onNav();
     };
     history.pushState = wrap(history.pushState);
     history.replaceState = wrap(history.replaceState);
-    window.addEventListener('popstate', () => setTimeout(() => { filterAll(); applyTheme(); checkProfilePage(); }, 400));
+    window.addEventListener('popstate', () => {
+      if (window.location.href.includes('/posts/write') && ['5', '6', '7'].includes(currentTheme)) {
+        location.reload();
+        return;
+      }
+      onNav();
+    });
   }
 
   function mountUI() {
@@ -329,6 +342,42 @@
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
+  /* ── Write Page Toast ── */
+
+  let writeToastShown = false;
+
+  function showWriteToast() {
+    if (writeToastShown) return;
+    writeToastShown = true;
+
+    const toast = document.createElement('div');
+    toast.id = 'lp-write-toast';
+    toast.textContent = '글쓰기 탭에서는 잠시 테마가 해제됩니다';
+    toast.style.cssText = `
+      position:fixed !important; top:50% !important; left:50% !important;
+      transform:translate(-50%,-50%) !important; z-index:2147483647 !important;
+      background:rgba(0,0,0,0.82) !important; color:#fff !important;
+      -webkit-text-fill-color:#fff !important;
+      padding:14px 28px !important; border-radius:12px !important;
+      font-size:14px !important; font-weight:600 !important;
+      font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif !important;
+      pointer-events:none !important; opacity:0 !important;
+      transition:opacity 0.3s ease !important;
+      backdrop-filter:blur(8px) !important;
+      box-shadow:0 4px 20px rgba(0,0,0,0.3) !important;
+      border:none !important; text-shadow:none !important;
+      animation:none !important; filter:none !important;
+    `;
+    document.body.appendChild(toast);
+
+    requestAnimationFrame(() => { toast.style.opacity = '1'; });
+
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      setTimeout(() => { toast.remove(); writeToastShown = false; }, 300);
+    }, 2000);
+  }
+
   /* ── Auto Theme Apply ── */
 
   const THEMES = {
@@ -367,8 +416,11 @@
     const isGlobalToggle = ['5', '6', '7'].includes(currentTheme);
     const isWritePage = window.location.href.includes('/posts/write');
 
+    if (!isWritePage) writeToastShown = false;
+
     if (currentTheme === '0' || (!isGlobalToggle && currentScopes.length === 0) || (isGlobalToggle && isWritePage)) {
       style.textContent = '';
+      if (isGlobalToggle && isWritePage) showWriteToast();
       return;
     }
 

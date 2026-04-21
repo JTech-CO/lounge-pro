@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>lounge-pro | 패치 노트 · Release Notes</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap');
+
+    :root {
+      --bg: #000000;
+      --text-primary: #e0e0e0;
+      --text: #cccccc;
+      --muted: #888888;
+      --panel: #0a0a0a;
+      --border: #333333;
+      --border-hover: #03C75A;
+      --link: #03C75A;
+      --link-visited: #02a34a;
+      --accent: #03C75A;
+      --note-bg: #111111;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      padding: 80px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1,
+    h2,
+    h3 {
+      color: var(--accent);
+      margin: 0 0 1rem 0;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      display: flex;
+      align-items: center;
+    }
+
+    h2::after {
+      content: '';
+      flex-grow: 1;
+      height: 1px;
+      background: var(--border);
+      margin-left: 20px;
+    }
+
+    h3 {
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin: 20px 0 8px 0;
+    }
+
+    p {
+      margin: 10px 0;
+      color: var(--text);
+      font-weight: 300;
+    }
+
+    a {
+      color: var(--link);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color .2s;
+    }
+
+    a:visited {
+      color: var(--link-visited);
+    }
+
+    a:hover {
+      border-bottom-color: var(--link);
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .note {
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      background: var(--note-bg);
+      border-left: 2px solid var(--accent);
+      padding: 16px;
+      font-family: var(--font-mono);
+      margin: 16px 0;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 24px;
+      transition: all .3s;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    .card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+
+    ul {
+      margin: 12px 0 12px 22px;
+      color: var(--text);
+      font-weight: 300;
+    }
+
+    li {
+      padding-left: 4px;
+      margin-bottom: 8px;
+    }
+
+    li strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    li code {
+      font-family: var(--font-mono);
+      font-size: 0.82em;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 1px 5px;
+      color: #aaaaaa;
+    }
+
+    .small {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 20px;
+    }
+
+    footer {
+      margin-top: 80px;
+      padding: 40px 20px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 40px 20px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      main {
+        padding: 40px 20px;
+      }
+
+      h2 {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      h2::after {
+        width: 100%;
+        margin-top: 10px;
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="badge">lounge-pro</div>
+    <h1>패치 노트 · Release Notes</h1>
+    <span class="small">Chrome Extension — lounge.naver.com</span>
+  </header>
+
+  <main>
+
+    <!-- v3.0.2 -->
+    <div class="card">
+      <h2>v3.0.2 — Forest 테마 및 글쓰기 보호</h2>
+
+      <h3>New Features</h3>
+      <ul>
+        <li>
+          <strong>Forest 테마 신설 (Matrix 대체)</strong>: 다크 글래스모피즘 기반 숲속 테마
+          <ul>
+            <li>배경 <code>#1a2318</code>(짙은 숲), 카드 <code>rgba(42,56,40,0.75)</code> 반투명 +
+              <code>backdrop-filter: blur(12px)</code></li>
+            <li>텍스트 <code>#e8ede6</code>(크림), 포인트 <code>#8da491</code>(세이지 그린), Quicksand 폰트</li>
+            <li>전체 UI에 둥근 모서리(0.8rem ~ 9999px 캡슐형) 적용, 커스텀 스크롤바</li>
+          </ul>
+        </li>
+        <li><strong>글쓰기 테마 자동 해제 토스트</strong>: 화면 전체 변경형 테마(고대비·Forest·Claude Code) 사용 중 글쓰기 진입 시 테마 해제 + 화면 중앙 안내 메시지
+          2초 표시, 글 등록 후 자동 복원</li>
+      </ul>
+
+      <h3>Improvements</h3>
+      <ul>
+        <li><strong>우측 하단 UI 테마 격리 강화</strong>: <code>mountUI</code> <code>&lt;style&gt;</code> 블록 전체에
+          <code>!important</code> 적용, 어떤 테마에서도 차단/테마 패널이 변형되지 않도록 보호</li>
+        <li><strong>월간 패널 Forest 연동</strong>: 다크 글래스 배경 + 캡슐형 프로그레스 바 + 세이지 그린 그라데이션 + Quicksand 폰트</li>
+      </ul>
+    </div>
+
+    <!-- v3.0.1 -->
+    <div class="card">
+      <h2>v3.0.1 — 패널 안정화 및 테마 연동</h2>
+
+      <h3>Bug Fixes</h3>
+      <ul>
+        <li><strong>기본 테마 OFF</strong>: 첫 설치 시 테마가 Pastel로 적용되던 문제 수정, 기본값을 <code>Off</code>로 변경</li>
+        <li><strong>패널 깜빡임 수정</strong>: React 리렌더 시 스탯 패널이 DOM에서 제거되면 <code>MutationObserver</code>가 즉시 재마운트하도록
+          <code>ensureProfilePanel()</code> 추가</li>
+      </ul>
+
+      <h3>Improvements</h3>
+      <ul>
+        <li><strong>패널 높이 약 25% 축소</strong>: 패딩·마진·바 높이·아이콘·폰트 전반을 컴팩트하게 조정</li>
+        <li><strong>다크 브랜드 테마 고정</strong>: 라이트/다크 모드 무관하게 <code>#111111</code> 배경 + 네이버 그린(<code>#03C75A</code>) 기반 고정
+          다크 스타일</li>
+        <li><strong>그라데이션 테마 테두리 연동</strong>: Pastel · Cyberpunk · Holographic · Neon 테마에서 테두리 Scope 활성 시 스탯 패널 테두리에 해당
+          그라데이션 <code>border-image</code> 적용 (글자·배경은 미변경)</li>
+        <li><strong>전체 변경형 테마 연동</strong>: 고대비(#5) · 매트릭스(#6) 적용 시 패널 와이어프레임화; Claude Code(#7) 적용 시 <code>dashed</code>
+          테두리 + 모노스페이스 + 터미널 톤으로 전환</li>
+      </ul>
+    </div>
+
+    <!-- v3.0 -->
+    <div class="card">
+      <h2>v3.0 — 월간 이벤트 트래커</h2>
+
+      <h3>New Features</h3>
+      <ul>
+        <li>
+          <strong>월간 이벤트 달성 트래커</strong>: 프로필 페이지(<code>/profiles/</code>)에서 이번 달 작성한 게시글·댓글 수를 자동 집계하여 프로그레스 바로 표시
+          <ul>
+            <li>달성 목표: 게시글 월 30개, 댓글 월 90개</li>
+            <li>25% / 50% / 75% / 100% 마일스톤 단계 표시 및 단계별 색상 변화 (게이미피케이션)</li>
+            <li>100% 초과 시 실제 퍼센티지 + 달성 시머 이펙트</li>
+            <li>새로고침 버튼으로 즉시 갱신, 5분 캐시로 효율적 동작</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3>Changes</h3>
+      <ul>
+        <li>
+          <strong><code>injector.js</code> 확장</strong>: 활동 API 커서 기반 월별 게시글/댓글 카운팅 엔진 추가
+          (<code>countMonthlyActivity</code>)
+          <ul>
+            <li>API 커서 Base64 디코딩으로 날짜 경계 판별</li>
+            <li>JSON/XML 양쪽 응답 포맷 호환 파서 내장</li>
+            <li><code>LP_MONTHLY_STATS_REQUEST</code> / <code>LP_MONTHLY_STATS_RESULT</code> 메시지 프로토콜</li>
+          </ul>
+        </li>
+        <li><strong><code>content.js</code> 확장</strong>: 프로필 페이지 감지 → 패널 마운트 → 데이터 수신 → 렌더링 파이프라인 추가</li>
+        <li><strong><code>style.css</code> 재작성</strong>: 네이버 라운지 네이티브 디자인 언어 기반 이벤트 트래커 패널 스타일; 테마 엔진과 독립 동작하도록
+          <code>#lp-monthly-panel</code> 전용 스타일 격리</li>
+        <li><code>manifest.json</code> 버전 <strong>2.6 → 3.0</strong></li>
+      </ul>
+    </div>
+
+    <!-- v2.6 -->
+    <div class="card">
+      <h2>v2.6 — Claude Code 테마 &amp; 레이아웃 모드 개선</h2>
+      <ul>
+        <li><strong>Claude Code 테마 (<code>#7</code>) 신설</strong>: <code>1px dashed</code> 테두리,
+          <code>#1e1e1e</code>/<code>#2a2a2a</code> 배경, <code>#e8855a</code> 오렌지 액센트, <code>#d4cfbe</code> 본문, 모노스페이스 폰트
+        </li>
+        <li><strong>레이아웃 모드 Scope 비활성화</strong>: 테마 5/6/7 선택 시 <code>renderThemeUI()</code>가 Scope 체크박스를 자동
+          <code>disabled</code> 처리</li>
+        <li><strong>이중 테두리 버그 수정</strong>: CSS 주입 전 <code>* { border: none !important }</code> 리셋 선행 적용</li>
+        <li><strong>댓글 프로필 사진 버그 수정</strong>: <code>:not([style*="background-image"])</code> 예외 추가로 인라인 아바타 이미지 보존</li>
+      </ul>
+    </div>
+
+    <!-- v2.5 -->
+    <div class="card">
+      <h2>v2.5 — High Contrast / Matrix CSS 루트 장악</h2>
+      <ul>
+        <li><strong><code>:root</code> 토큰 강제 교체</strong>: <code>--color-background-base</code>,
+          <code>--color-text-primary</code> 등 네이버 디자인 토큰을 소스에서 직접 덮어쓰기</li>
+        <li><strong>와일드카드 배경 블랙아웃</strong>: <code>*:not(img):not([style*="background-image"])…</code> 체인으로 배경색 일괄
+          <code>#000000</code> 강제</li>
+        <li><strong>SVG 예외 처리</strong>: <code>fill</code>/<code>stroke</code> 강제 교체 + <code>fill="none"</code> 아웃라인 아이콘
+          보호</li>
+        <li><strong>Matrix 전용 스크롤바</strong>: <code>::-webkit-scrollbar</code> 형광 초록 적용</li>
+        <li><code>animation-name</code>, <code>box-shadow</code>, <code>filter</code> 일괄 제거</li>
+      </ul>
+    </div>
+
+    <!-- v2.4 -->
+    <div class="card">
+      <h2>v2.4 — 순수 다크모드 와이어프레임 아키텍처</h2>
+      <ul>
+        <li><strong>High Contrast / Matrix 렌더링 엔진 재설계</strong>: <code>border-radius: 0</code>, 퓨어 블랙 배경, 1px 솔리드 액센트 테두리
+          와이어프레임화</li>
+        <li><strong>코드 유출 버그 수정</strong>: 템플릿 리터럴 이스케이프 누수 수정</li>
+        <li><strong>차단 최대 수 상향</strong>: <code>MAX 10 → 20</code></li>
+      </ul>
+    </div>
+
+    <!-- v2.3 -->
+    <div class="card">
+      <h2>v2.3 — High Contrast &amp; Matrix 전체 레이아웃 테마</h2>
+      <ul>
+        <li><strong>솔리드 다크 테마 2종 신설</strong>: <code>border-radius: 0</code>, <code>box-shadow: none</code>, 퓨어 블랙 배경,
+          액센트 컬러(<code>#fff</code>/<code>#0f0</code>) 단일 적용</li>
+        <li><strong>스코프 로직 (<code>currentScopes</code>) 추가</strong>:
+          <code>Text</code>/<code>Border</code>/<code>Bg</code> 독립 토글; <code>SEL_TEXT</code>, <code>SEL_BORDER</code>,
+          <code>SEL_BG</code> 그룹화 타겟팅</li>
+      </ul>
+    </div>
+
+    <!-- v2.2 -->
+    <div class="card">
+      <h2>v2.2 — 멀티 테마 토글 UI</h2>
+      <ul>
+        <li><strong>4종 네온 테마 통합</strong>: Pastel, Cyberpunk, Holographic, Neon</li>
+        <li><strong>테마 패널 구축</strong>: 전구 SVG 버튼(<code>.lb-theme-btn</code>), <code>applyTheme()</code> 실시간
+          <code>&lt;style&gt;</code> 스왑, <code>THEME_KEY</code>/<code>SCOPE_KEY</code> 영속성</li>
+      </ul>
+    </div>
+
+    <!-- v2.1 -->
+    <div class="card">
+      <h2>v2.1 — UI 안정화 &amp; 오로라 글로우 이펙트</h2>
+      <ul>
+        <li><strong>차단 필터링 재설계 (Radix UI 대응)</strong>: <code>el.closest()</code> 역순 탐색으로 부모 컨테이너 탐색 후
+          <code>display:none</code> 적용</li>
+        <li><strong>통계 배지 로직 폐기</strong>: <code>extractCountsFromDOM</code> 등 삭제 →
+          <code>[data-slot="profile-sub-text"] span</code>에 <code>background-clip: text</code> 애니메이션 직접 주입</li>
+      </ul>
+    </div>
+
+    <!-- v2.0 -->
+    <div class="card">
+      <h2>v2.0 — lounge-pro</h2>
+      <ul>
+        <li><strong>리브랜딩</strong>: <code>lounge-block</code> → <code>lounge-pro</code></li>
+        <li><strong>프로필 통계 배지</strong>: <code>extractCountsFromDOM</code>/<code>extractCountsFromRSC</code> +
+          <code>MutationObserver</code> 연동</li>
+        <li><code>content.js</code>에 코어 로직 및 스타일 템플릿 병합</li>
+      </ul>
+    </div>
+
+    <!-- v1.0 -->
+    <div class="card">
+      <h2>v1.0 — lounge-block</h2>
+      <p class="note">초기 릴리즈 — 닉네임 기반 네이버 라운지 피드 필터링 확장 프로그램</p>
+      <ul>
+        <li><strong>초기 릴리즈</strong>: 닉네임 기반 피드 숨김 (<code>filterAll</code>, <code>filterFeed</code>,
+          <code>filterCarousel</code>)</li>
+        <li><strong>스토리지</strong>: <code>blockList</code>(최대 20) + <code>chrome.storage.local</code> 바인딩</li>
+        <li><strong>SPA 라우팅 후킹</strong>: <code>history.pushState</code>/<code>replaceState</code>/<code>popstate</code>
+          오버라이드</li>
+        <li><strong>API 인터셉트</strong>: <code>injector.js</code> MAIN world 주입으로 <code>postId ↔ personaId</code> 매핑 추출
+        </li>
+      </ul>
+    </div>
+
+  </main>
+
+  <footer>
+    © 2026 lounge-pro &nbsp;·&nbsp; <a href="lounge-pro-privacy-policy.html">Privacy Policy</a>
+  </footer>
+
+</body>
+
+</html>
