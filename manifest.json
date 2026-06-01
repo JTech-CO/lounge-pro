@@ -1,11 +1,24 @@
 {
   "manifest_version": 3,
   "name": "lounge-pro",
-  "version": "3.0.2",
-  "description": "Naver Lounge Enhancement Suite - User Blocker, Profile Stats & Monthly Event Tracker",
-  "permissions": [
-    "storage"
+  "version": "4.0.0",
+  "description": "네이버 라운지 향상 도구 — 라운지 테마(색상/디자인) 변경 + 최대 4개 채널 멀티 컬럼 뷰어",
+  "permissions": ["storage", "declarativeNetRequest", "tabs"],
+  "host_permissions": [
+    "https://lounge.naver.com/*",
+    "https://api.lounge.naver.com/*"
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "lounge-pro · 컬럼 보기 전환",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
@@ -13,26 +26,28 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "https://lounge.naver.com/*"
-      ],
-      "js": [
-        "injector.js"
-      ],
+      "matches": ["https://lounge.naver.com/*"],
+      "js": ["discover_injector.js"],
       "run_at": "document_start",
-      "world": "MAIN"
+      "world": "MAIN",
+      "all_frames": true
     },
     {
-      "matches": [
-        "https://lounge.naver.com/*"
-      ],
-      "js": [
-        "content.js"
-      ],
-      "css": [
-        "style.css"
-      ],
+      "matches": ["https://lounge.naver.com/*"],
+      "js": ["lounge_db.js", "discover_content.js", "column.js"],
+      "css": ["overlay.css"],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://lounge.naver.com/*"],
+      "js": ["theme.js", "profile.js"],
       "run_at": "document_idle"
     }
-  ]
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      { "id": "ruleset_1", "enabled": true, "path": "rules.json" }
+    ]
+  }
 }

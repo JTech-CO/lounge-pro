@@ -229,6 +229,39 @@
 
   <main>
 
+    <!-- v4.0.0 -->
+    <div class="card">
+      <h2>v4.0.0 — 기능 통폐합 · 멀티 컬럼 뷰어 통합</h2>
+      <p class="note">네이버 라운지 공식 업데이트로 일부 기능이 정식 지원됨에 따라, lounge-pro를 <strong>라운지 테마</strong>와 <strong>멀티 컬럼 뷰어</strong> 두 기능으로 재편했습니다.</p>
+
+      <h3>New Features</h3>
+      <ul>
+        <li><strong>멀티 컬럼 뷰어 통합</strong>: 별도 확장이던 Lounge Column을 흡수 — 한 화면에서 최대 4개 라운지 채널을 컬럼형으로 동시 표시(로그인 세션 유지)
+          <ul>
+            <li>좌하단 <strong>컬럼 보기</strong> 버튼 또는 툴바 아이콘으로 일반 ↔ 컬럼 보기 전환</li>
+            <li>API 응답을 가로채 공개 채널을 자동 수집, 검색형 드롭다운으로 컬럼별 채널 배치</li>
+            <li>컬럼 내 뒤로가기(마우스 4번째 버튼·Backspace), 컬럼 수·채널·사이드바 상태 자동 저장</li>
+            <li><code>declarativeNetRequest</code>로 <code>X-Frame-Options</code>·CSP 헤더 제거하여 iframe 임베딩 구현</li>
+          </ul>
+        </li>
+        <li><strong>UI 충돌 방지</strong>: 컬럼 보기 진입 시 우측 하단 테마 토글 버튼(<code>#__lb__</code>)을 자동으로 숨김(<code>html.lc-overlay-on</code>)</li>
+      </ul>
+
+      <h3>Removed</h3>
+      <ul>
+        <li><strong>사용자 차단(User Blocker) 제거</strong>: 닉네임 기반 피드 숨김 기능 및 관련 UI·저장소(<code>naver_lounge_blocked</code>) 일체 삭제</li>
+        <li><strong>월간 이벤트 트래커 제거</strong>: 프로필 월간 게시글·댓글 집계 대시보드 및 활동 API 카운팅 엔진(<code>injector.js</code>) 삭제</li>
+      </ul>
+
+      <h3>Architecture</h3>
+      <ul>
+        <li><code>content.js</code> → <code>theme.js</code>로 분리, 테마 엔진과 강조 마킹(<code>markAccents</code>)만 유지</li>
+        <li>컬럼 모듈 흡수: <code>column.js</code>, <code>background.js</code>(서비스 워커), <code>discover_injector.js</code>, <code>discover_content.js</code>, <code>lounge_db.js</code>, <code>overlay.css</code>, <code>rules.json</code></li>
+        <li><code>injector.js</code>·<code>style.css</code> 삭제; <code>manifest.json</code> 병합(권한 <code>declarativeNetRequest</code>·<code>tabs</code>·host_permissions, background, action 추가)</li>
+        <li>버전 <strong>3.0.2 → 4.0.0</strong></li>
+      </ul>
+    </div>
+
     <!-- v3.0.2 -->
     <div class="card">
       <h2>v3.0.2 — Forest 테마 및 글쓰기 보호</h2>

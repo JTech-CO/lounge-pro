@@ -259,7 +259,7 @@
       <button class="btn" onclick="setLang('ko')">한국어</button>
       <button class="btn" onclick="setLang('en')">English</button>
     </div>
-    <span class="small">Last updated: 2026-04-22</span>
+    <span class="small">Last updated: 2026-06-01</span>
   </header>
 
   <main>
@@ -270,24 +270,24 @@
       <div class="card">
         <h2>개요</h2>
         <p>이 문서는 Chrome 확장 프로그램 <strong>lounge-pro</strong>의 개인정보 처리방침입니다.</p>
-        <p class="note">lounge-pro는 네이버 라운지(lounge.naver.com) 페이지에서 동작하며, 사용자가 직접 지정한 닉네임을 브라우저 로컬 저장소에만 저장합니다. 어떠한 데이터도
+        <p class="note">lounge-pro는 네이버 라운지(lounge.naver.com) 페이지에서 동작하며, 테마·컬럼 뷰어 설정과 공개 채널 목록을 브라우저 로컬 저장소에만 저장합니다. 어떠한 데이터도
           외부 서버로 전송하지 않습니다.</p>
       </div>
 
       <div class="card">
         <h2>1. 처리하는 데이터</h2>
         <ul>
-          <li><strong>차단 닉네임 목록</strong>: 사용자가 직접 입력한 닉네임(최대 20개)을 브라우저의 <em>chrome.storage.local</em>에 저장합니다. 이 데이터는
-            사용자의 기기에만 존재하며 외부로 전송되지 않습니다.</li>
           <li><strong>테마 설정</strong>: 사용자가 선택한 테마(Pastel, Cyberpunk, Holographic, Neon, High Contrast, Forest, Claude
             Code)와 적용 범위(글자·테두리·그라데이션) 값을
             브라우저의 <em>chrome.storage.local</em>에 저장합니다. 이 데이터는 사용자의 기기에만 존재하며 외부로 전송되지 않습니다.</li>
-          <li><strong>페이지 DOM 읽기</strong>: 차단 기능 수행을 위해 현재 열린 네이버 라운지 페이지의 게시글 닉네임 요소를 일시적으로 읽습니다. 또한 프로필 통계 표시를 위해 프로필
-            페이지의 게시글 수 · 댓글 수 정보를 읽습니다. 읽은 내용은 저장되지 않습니다.</li>
-          <li><strong>네트워크 요청 감청 및 분석</strong>: 게시글과 작성자의 매핑 정보를 얻고 <strong>월간 활동량(게시글/댓글 수)</strong>을 집계하기 위해 브라우저 내부에서
-            네이버 라운지 API 응답을 가로채어 분석합니다. 이 과정에서 수집·계산된 통계는 효율성을 위해 메모리에 임시 캐시(약 5분)되며, 어떤 데이터도 외부로 전송되지 않고 소멸합니다.</li>
-          <li><strong>프로필 통계 렌더링</strong>: 프로필 페이지 방문 시 페이지 내 스크립트 데이터(RSC) 및 API 응답을 활용하여 총 활동 통계와 월간 이벤트 달성률을 패널로
-            표시합니다. 이 데이터는 화면 표시 용도로만 사용되며 저장되지 않습니다.</li>
+          <li><strong>컬럼 뷰어 설정</strong>: 컬럼 수(1~4), 컬럼별로 선택한 채널, 사이드바 상태 등 멀티 컬럼 뷰어 구성을 브라우저의 <em>chrome.storage.local</em>에
+            저장합니다. 이 데이터는 사용자의 기기에만 존재하며 외부로 전송되지 않습니다.</li>
+          <li><strong>공개 채널 목록</strong>: 컬럼 선택 메뉴를 채우기 위해 네이버 라운지의 <strong>공개 채널 정보</strong>(채널 ID·이름·카테고리)를 수집하여
+            <em>chrome.storage.local</em>에 저장합니다. 이는 공개적으로 노출되는 채널 메타데이터이며 개인정보가 아닙니다.</li>
+          <li><strong>페이지 DOM 읽기</strong>: 테마 적용을 위해 현재 열린 라운지 페이지의 제목·'작성자' 배지 등 UI 요소를 일시적으로 읽어 강조색 대상으로 표시하고, 채널 자동 탐색을 위해
+            채널 링크를 읽습니다. 읽은 내용은 별도로 저장되지 않습니다.</li>
+          <li><strong>네트워크 처리</strong>: ① 컬럼 뷰에서 라운지 페이지를 iframe으로 임베딩할 수 있도록 <em>declarativeNetRequest</em> 규칙으로 응답 헤더(X-Frame-Options·CSP)를 제거하고,
+            ② 채널 목록을 얻기 위해 네이버 라운지의 공개 채널 API에 요청하거나 그 응답을 브라우저 내부에서 가로채 채널 정보를 추출합니다. 이 과정에서 어떤 데이터도 외부로 전송되지 않습니다.</li>
         </ul>
       </div>
 
@@ -300,7 +300,7 @@
       <div class="card">
         <h2>3. 데이터 보관 및 삭제</h2>
         <ul>
-          <li><strong>차단 목록</strong>: 사용자가 직접 '해제' 버튼을 누르거나, 브라우저의 확장 프로그램 데이터를 초기화하면 삭제됩니다.</li>
+          <li><strong>테마·컬럼 설정 및 공개 채널 목록</strong>: 브라우저의 확장 프로그램 데이터를 초기화하면 모두 삭제됩니다.</li>
           <li><strong>임시 데이터</strong>: 페이지 이동 또는 탭 종료 시 메모리에서 즉시 소멸합니다.</li>
         </ul>
       </div>
@@ -324,30 +324,30 @@
       <div class="card">
         <h2>Overview</h2>
         <p>This Privacy Policy describes how the Chrome extension <strong>lounge-pro</strong> handles user data.</p>
-        <p class="note">lounge-pro operates exclusively on Naver Lounge (lounge.naver.com) and stores only the nicknames
-          you specify — locally in your browser. No data is ever sent to any external server.</p>
+        <p class="note">lounge-pro operates exclusively on Naver Lounge (lounge.naver.com) and stores only your theme &amp;
+          column-viewer settings and a list of public channels — locally in your browser. No data is ever sent to any external server.</p>
       </div>
 
       <div class="card">
         <h2>1. Data We Process</h2>
         <ul>
-          <li><strong>Block list (nicknames)</strong>: Up to 20 nicknames you enter are saved in
-            <em>chrome.storage.local</em> on your device only. This data never leaves your browser.
-          </li>
           <li><strong>Theme settings</strong>: Your selected theme (Pastel, Cyberpunk, Holographic, Neon, High Contrast,
             Forest, or Claude Code) and scope preferences (text / border / background gradient) are saved in
             <em>chrome.storage.local</em> on your device only. This data never leaves your browser.
           </li>
-          <li><strong>Page DOM reading</strong>: To apply blocks, the extension temporarily reads post-author nickname
-            elements on the active Naver Lounge page. It also reads post and comment count information on profile pages
-            to display stats badges. This data is not stored.</li>
-          <li><strong>Network response interception &amp; analysis</strong>: To map posts to their authors and calculate
-            your <strong>monthly activity (posts/comments)</strong>, the extension intercepts and analyzes Naver Lounge
-            API responses inside the browser. The calculated stats are temporarily cached in memory (for about 5 mins)
-            for performance but never leave your browser and are discarded thereafter.</li>
-          <li><strong>Profile stats rendering</strong>: When visiting a profile page, the extension uses in-page script
-            data (RSC) and API responses to display your total stats and monthly achievement tracker. This data is used
-            solely for on-screen display and is not stored.</li>
+          <li><strong>Column viewer settings</strong>: Your multi-column layout — column count (1–4), the channel chosen
+            for each column, and sidebar state — is saved in <em>chrome.storage.local</em> on your device only. This data
+            never leaves your browser.</li>
+          <li><strong>Public channel list</strong>: To populate the column picker, the extension collects Naver Lounge
+            <strong>public channel info</strong> (channel ID, name, category) and stores it in <em>chrome.storage.local</em>.
+            This is publicly visible channel metadata, not personal data.</li>
+          <li><strong>Page DOM reading</strong>: To apply themes, the extension temporarily reads UI elements (titles,
+            "작성자" author badges, etc.) on the active Lounge page to mark them as accent targets, and reads channel links
+            for channel discovery. This content is not stored.</li>
+          <li><strong>Network processing</strong>: (1) It removes response headers (X-Frame-Options / CSP) via a
+            <em>declarativeNetRequest</em> rule so Lounge pages can be embedded as iframes in column view, and (2) it
+            requests Naver Lounge's public channel-list APIs — or intercepts their responses inside the browser — to
+            extract channel info. No data is transmitted externally in this process.</li>
         </ul>
       </div>
 
@@ -360,8 +360,8 @@
       <div class="card">
         <h2>3. Data Retention &amp; Deletion</h2>
         <ul>
-          <li><strong>Block list</strong>: Deleted when you press the "해제 (unblock)" button or clear the extension's
-            storage via your browser settings.</li>
+          <li><strong>Theme / column settings &amp; public channel list</strong>: All of these are deleted when you clear
+            the extension's storage via your browser settings.</li>
           <li><strong>Temporary data</strong>: Cleared from memory instantly upon page navigation or tab close.</li>
         </ul>
       </div>
