@@ -2,6 +2,8 @@
 
 > **네이버 라운지를 더 쾌적하게 — 라운지 테마 · 멀티 컬럼 뷰어 · 프로필 대시보드 바로가기** · `v4.0.0`
 
+<img src="https://raw.githubusercontent.com/JTech-CO/lounge-pro/refs/heads/main/images/1-Main.png" width="45%"> <img src="https://raw.githubusercontent.com/JTech-CO/lounge-pro/refs/heads/main/images/2-Sub1.png" width="45%">
+
 ## 1. 소개 (Introduction)
 
 lounge-pro는 네이버 라운지(lounge.naver.com)에 부족한 편의 기능을 브라우저 확장 프로그램으로 보완합니다.
